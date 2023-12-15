@@ -48,7 +48,6 @@ const Write = () => {
           img: img ? imageUrl : "",
           date: moment(Date.now()).format("YYYY-MM-DD HH:mm:ss")
         })
-
     } catch (error) {
       console.log(error)
     }

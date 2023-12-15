@@ -31,7 +31,7 @@ export const addPost = (req, res) => {
 
         const q = "INSERT INTO posts(`title`, `desc`,`img`, `cat`,`date`,`uid`) VALUES (?)";
 
-        const values = [req.params.title, req.params.desc, req.params.img, req.params.cat, req.params.date, userInfo.id];
+        const values = [req.body.title, req.body.desc, req.body.img, req.body.cat, req.body.date, userInfo.id];
 
         db.query(q, [values], (err, data) => {
             if (err) return res.status(500).json(err);
@@ -39,6 +39,12 @@ export const addPost = (req, res) => {
         })
     })
 }
+
+
+
+
+
+
 export const deletePost = (req, res) => {
 
     const token = req.cookies.access_token;
@@ -64,13 +70,14 @@ export const updatePost = (req, res) => {
         if (err) return res.status(403).json("Token is not valid")
 
         const postId = req.params.id;
-        const q = "UPDATE posts SET `title`=?,`desc`=?,`img`=?,`cat`=? WHERE id = ? AND uid = ?";
-        const values = [req.params.title, req.params.desc, req.params.img, req.params.cat]
+        const q = "UPDATE posts SET `title`=?, `desc`=?, `img`=?, `cat`=? WHERE `id` = ? AND `uid` = ?";
+        const values = [req.body.title, req.body.desc, req.body.img, req.body.cat]
 
-        db.query(q, [values, postId, userInfo.id], (err, data) => {
+        db.query(q, [...values, postId, userInfo.id], (err, data) => {
             if (err) return res.status(500).json(err);
             return res.json("Post has been updated!");
         })
     })
 }
+
 
