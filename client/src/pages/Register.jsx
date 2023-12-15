@@ -21,7 +21,7 @@ const Register = () => {
     e.preventDefault();
     try {
       await axios.post('/auth/register', inputs);
-      navigate('/');
+      navigate('/login');
     } catch (err) {
       setError(err.response.data)
     }
